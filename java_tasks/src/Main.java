@@ -1,4 +1,5 @@
 import javax.management.BadAttributeValueExpException;
+import javax.management.ValueExp;
 import java.util.*;
 
 public class Main {
@@ -124,9 +125,19 @@ public class Main {
         return s1 + s2;
     }
 
+    // 19. Конвертер температуры
+    static double task19_2(double temp) throws ElementExeption {
+        if (temp < -273) {
+            throw new ElementExeption("Температура меньше абсолютного нуля");
+        }
+
+        return temp * 9.0 / 5.0 + 32.0;
+    }
+
     public static void main(String[] args) throws BadAttributeValueExpException, IllegalArgumentException, ElementExeption {
         // System.out.print(task1_2(3, 4));
         // System.out.print(task13_2(new int[]{1, 2, 3, 4, 5, 0}, 3));
         //System.out.print(task16_2("one", null));
+        System.out.print(task19_2(-300));
     }
 }
