@@ -92,7 +92,7 @@ public class Main {
     }
 
     // 7. Проверка массива на нули
-    static void task7_2(int[] arr) throws ElementExeption {
+    static void task7_2(final int[] arr) throws ElementExeption {
         boolean b = Arrays.stream(arr).noneMatch(x -> x == 0);
         System.out.print(Boolean.toString(b));
         if (!b) {
@@ -101,15 +101,32 @@ public class Main {
     }
 
     //10. Поиск элемента в массиве
-    static void task10_2(int[] arr, int num) throws ElementExeption {
+    static void task10_2(final int[] arr, int num) throws ElementExeption {
         boolean b = Arrays.stream(arr).noneMatch(x -> x == num);
         if (b) {
             throw new ElementExeption("Нет такого элемента");
         }
     }
 
+    // 13. Чтение элемента списка
+    static int task13_2(final int[] arr, int num) throws IndexOutOfBoundsException {
+        for (int i = 0; i != arr.length; ++i) {
+            if (arr[i] == num) return i;
+        }
+        throw new IndexOutOfBoundsException();
+    }
+
+    // 16. Конкатенация строк
+    static String task16_2(final String s1, final String s2) throws NullPointerException {
+        if (s1 == null || s2 == null) {
+            throw new NullPointerException();
+        }
+        return s1 + s2;
+    }
+
     public static void main(String[] args) throws BadAttributeValueExpException, IllegalArgumentException, ElementExeption {
-        //System.out.print(task1_2(3, 4));
-        task10_2(new int[]{1, 2, 3, 4, 5, 0}, 6);
+        // System.out.print(task1_2(3, 4));
+        // System.out.print(task13_2(new int[]{1, 2, 3, 4, 5, 0}, 3));
+        //System.out.print(task16_2("one", null));
     }
 }
