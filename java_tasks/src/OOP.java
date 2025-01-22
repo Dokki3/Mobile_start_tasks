@@ -1,0 +1,149 @@
+import org.jetbrains.annotations.NotNull;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.management.remote.rmi.RMIConnectionImpl_Stub;
+import java.util.*;
+
+// 1. Класс "Человек"
+class People {
+    private String _name;
+    private int _age;
+    private final char _gender;
+
+    public People(String name, int age, char gender) {
+        _name = name;
+        _age = age;
+        _gender = gender;
+    }
+
+    public void Print() {
+        System.out.printf("имя: " + _name + "\nвозраст: %d\nпол: " + _gender + "\n", _age);
+    }
+
+    public void Growth(int value) {
+        _age += value;
+    }
+
+    public void Rename(String newName) {
+        _name = newName;
+    }
+}
+
+// 4. Абстрактный класс "Транспорт"
+abstract class Transport {
+    public Transport() {}
+    abstract public void Move();
+}
+
+class Car extends Transport {
+    public void Move() {
+        System.out.println("Машина едет");
+    }
+}
+
+class Bike extends Transport {
+    public void Move() {
+        System.out.println("велосипед едет");
+    }
+}
+
+// 7. Счетчик объектов
+class Counter {
+    static private int _counter = 0;
+
+    public Counter() {
+        _counter++;
+    }
+
+    public void Print() {
+        System.out.println(_counter);
+    }
+}
+
+// 10. Работа с коллекциями: Университет
+
+class Student implements Comparable {
+    private final String _name;
+    private final String _group;
+    private final List<Integer> _grade;
+
+    public Student(String name, String group, List<Integer> grade) {
+        _name = name;
+        _group = group;
+        _grade = grade;
+    }
+
+    public String GetName() {
+        return _name;
+    }
+
+    public String GetGroup() {
+        return _group;
+    }
+
+    public double GetAg() {
+        return _grade.stream().mapToDouble(x -> x).sum() / _grade.size();
+    }
+
+    @Override
+    public int compareTo(@NotNull Object o) {
+        Student student = (Student) o;
+        return GetName().compareTo(student.GetName());
+    }
+}
+
+class University {
+
+    private List<Student> _students;
+
+    public University(List<Student> students) {
+        _students = students;
+    }
+
+    public void AddStudent(Student student) {
+        _students.add(student);
+    }
+
+    public void SortForName() {
+        Collections.sort(_students);
+
+        for (Student i : _students) {
+            System.out.println(i.GetName() + " " + i.GetGroup());
+        }
+    }
+
+    public void filtterForGrades() {
+        Scanner in = new Scanner(System.in);
+
+        double filter = in.nextDouble();
+
+        for (Student i : _students) {
+            if (i.GetAg() == filter) {
+                System.out.println(i.GetName() + " " + i.GetGroup() + " ср. оценка: " + i.GetAg());
+            }
+        }
+    }
+}
+
+// 13. Генерация уникальных идентификаторов
+
+class UniqueID {
+
+    static AtomicInteger nextId = new AtomicInteger();
+
+    private final int _id;
+
+    public UniqueID() {
+        _id = SetId();
+    }
+
+    public int SetId() {
+        return nextId.incrementAndGet();
+    }
+
+    public int GetId() {
+        return _id;
+    }
+}
+
+// 16. Перегрузка операторов: Матрица
