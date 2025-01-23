@@ -147,3 +147,102 @@ class UniqueID {
 }
 
 // 16. Перегрузка операторов: Матрица
+class Matrix {
+    private int _rows;
+    private int _cols;
+    private double[][] _data;
+
+    public Matrix(int rows, int cols) {
+        this._rows = rows;
+        this._cols = cols;
+        this._data = new double[rows][cols];
+    }
+
+    public Matrix(double[][] data) {
+        this._rows = data.length;
+        this._cols = data[0].length;
+        this._data = new double[_rows][_cols];
+
+        for (int i = 0; i < _rows; i++) {
+            System.arraycopy(data[i], 0, this._data[i], 0, _cols);
+        }
+    }
+
+    public Matrix Add(Matrix other) {
+        if (this._rows != other._rows || this._cols != other._cols) {
+            throw new IllegalArgumentException("Размеры матриц должны совпадать для сложения.");
+        }
+
+        Matrix result = new Matrix(_rows, _cols);
+        for (int i = 0; i < _rows; i++) {
+            for (int j = 0; j < _cols; j++) {
+                result._data[i][j] = this._data[i][j] + other._data[i][j];
+            }
+        }
+        return result;
+    }
+
+    public Matrix Multiply(Matrix other) {
+        if (this._cols != other._rows) {
+            throw new IllegalArgumentException("Количество столбцов первой матрицы должно совпадать с количеством строк второй матрицы.");
+        }
+
+        Matrix result = new Matrix(this._rows, other._cols);
+        for (int i = 0; i < this._rows; i++) {
+            for (int j = 0; j < other._cols; j++) {
+                for (int k = 0; k < this._cols; k++) {
+                    result._data[i][j] += this._data[i][k] * other._data[k][j];
+                }
+            }
+        }
+        return result;
+    }
+
+    public void Print() {
+        for (double[] row : _data) {
+            for (double value : row) {
+                System.out.print(value + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+
+// 19. Наследование: Электроника
+class Device {
+    protected String brand;
+
+    public Device(String brand) {
+        this.brand = brand;
+    }
+
+    public void TurnOn() {
+        System.out.println(brand + " is now ON.");
+    }
+
+    public void TurnOff() {
+        System.out.println(brand + " is now OFF.");
+    }
+}
+
+class Smartphone extends Device {
+
+    public Smartphone(String brand) {
+        super(brand);
+    }
+
+    public void TakePhoto() {
+        System.out.println(brand + " is taking a photo.");
+    }
+}
+
+class Laptop extends Device {
+
+    public Laptop(String brand) {
+        super(brand);
+    }
+
+    public void CompileCode() {
+        System.out.println(brand + " is compiling code.");
+    }
+}
